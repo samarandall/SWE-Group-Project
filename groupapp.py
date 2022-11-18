@@ -33,6 +33,7 @@ class LoginForm(FlaskForm):
     user_password = PasswordField(validators=[InputRequired(), length(min=9, max=30)], render_kw={"placeholder": "Password"})
     submit = SubmitField("Login User")
 
+    #to do: how to validate if something is an email? What requires a string to be an email
     def validate_email(self, email):
         """Function used by Loginform that checks to see if the email is valid and
         that the email exists in our database
@@ -64,14 +65,16 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
 
+    return render_template("register.html", form=form)
+
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = Person.query.filter_by(username=form.username.data).first()
-        if user:
-            login_user(user)
+        user_email = Person.query.filter_by(email=form.username.data).first()
+        if user_email:
+            login_user(user_email)
             return redirect(url_for("route function here"))
     return render_template("login.html", form=form)
 
@@ -80,6 +83,6 @@ def unauthorized_callback():
     """function to handle attempted unauthorized access, will redirect
     to homepage
     Parameters(none)
-    Returns: redirect to home"""
+    Returns: redirect to home ie '/' route"""
     return redirect(url_for("home"))
 
