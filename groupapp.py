@@ -6,8 +6,8 @@ from flask_login import LoginManager, UserMixin
 from flask_login import logout_user, login_user, login_required, current_user
 # used to create form objects such as the search bar
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, IntegerField, TextAreaField
-from wtforms.validators import length, InputRequired, ValidationError, NumberRange
+from wtforms import StringField, SubmitField, PasswordField
+from wtforms.validators import length, InputRequired, ValidationError
 
 app = Flask(__name__)
 
@@ -23,13 +23,15 @@ def load_user(user_id):
     """used by login manager to load user based on their id"""
     return Person.query.get(int(user_id))
 
-class LoginForm(FlaskForm):
+class RegisterForm(FlaskForm):
+    user_email = StringField(validators=[InputRequired(), length(min=3, max=30)], render_kw={"placeholder": "Your Email"})
+    user_password = PasswordField(validators=[InputRequired(), length(min=9, max=30)], render_kw={"placeholder": "Password"})
+    submit = SubmitField("Register User")
 
-    username = StringField(
-        validators=[InputRequired(), length(min=10, max=25)],
-        render_kw={"placeholder": "User Email"},
-    )
-    submit = SubmitField("User Log In")
+class LoginForm(FlaskForm):
+    user_email = StringField(validators=[InputRequired(), length(min=3, max=30)], render_kw={"placeholder": "Your Email"})
+    user_password = PasswordField(validators=[InputRequired(), length(min=9, max=30)], render_kw={"placeholder": "Password"})
+    submit = SubmitField("Login User")
 
     def validate_email(self, email):
         """Function used by Loginform that checks to see if the email is valid and
@@ -38,15 +40,13 @@ class LoginForm(FlaskForm):
         Returns: Validation Error"""
         existing_email = Person.query.filter_by(email=email.data).first()
         if not existing_email:
-            raise ValidationError(
-                "This email is not in our records. Please sign up with your email."
-            )
+            raise ValidationError("This email is not in our records. Please sign up with your email.")
 
 class Person(database.Model, UserMixin):
     '''Person class that will be used to store the email and password information'''
     id = database.Column(database.Integer, primary_key=True)
     email = database.Column(database.String(30), unique=True, nullable=False)
-    hashed_password = database.Column(database.String(20), unique=True, nullable=False)
+    hashed_password = database.Column(database.String(30), nullable=False)
 
 # database creation
 with app.app_context():
@@ -59,7 +59,13 @@ with app.app_context():
 def home():
     return
 
-@app.route("/login")
+@app.route("/register", methods=['GET', 'POST'])
+def register():
+    form = RegisterForm()
+    if form.validate_on_submit():
+
+
+@app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
