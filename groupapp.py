@@ -14,6 +14,8 @@ from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
 
+bcrypt = Bcrypt(app)
+
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 
 # database declaration / login declaration
@@ -69,8 +71,15 @@ def home():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-
-
+        #generates a hashed password based on created bcrypt object
+        hashed_password = bcrypt.generate_password_hash(form.password.data)
+        #adds user to database and commits them
+        new_user = Person(email=form.user_email.data, hashed_password=hashed_password.data)
+        database.session.add(new_user)
+        database.session.commit()
+        #redirects to login
+        return redirect(url_for("login"))
+    #renders path page based on .html form (need to set up)
     return render_template("register.html", form=form)
 
 
