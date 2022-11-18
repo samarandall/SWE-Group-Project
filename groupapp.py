@@ -21,8 +21,9 @@ app = Flask(__name__)
 # bcrypt object is utilized in password hashing/encryption
 bcrypt = Bcrypt(app)
 
-# fetches session key from .env file
+# fetches session key and Database URI from .env file
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DATABASE_URI")
 
 # database declaration / login declaration
 login_manager = LoginManager()
@@ -148,7 +149,7 @@ def logout():
     logout_user()
     return redirect(url_for("user_login"))
 
-   
+
 @app.route("/main", methods=["Get", "POST"])
 @login_required
 def main():
