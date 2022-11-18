@@ -23,8 +23,27 @@ def load_user(user_id):
     """used by login manager to load user based on their id"""
     return Person.query.get(int(user_id))
 
+class LoginForm(FlaskForm):
+
+    username = StringField(
+        validators=[InputRequired(), length(min=10, max=25)],
+        render_kw={"placeholder": "User Email"},
+    )
+    submit = SubmitField("User Log In")
+
+    def validate_email(self, email):
+        """Function used by Loginform that checks to see if the email is valid and
+        that the email exists in our database
+        Parameters: (email entered by user)
+        Returns: Validation Error"""
+        existing_email = Person.query.filter_by(email=email.data).first()
+        if not existing_email:
+            raise ValidationError(
+                "This email is not in our records. Please sign up with your email."
+            )
+
 class Person(database.Model, UserMixin):
-    '''Person class that will be used to store the email'''
+    '''Person class that will be used to store the email and password information'''
     id = database.Column(database.Integer, primary_key=True)
     email = database.Column(database.String(30), unique=True, nullable=False)
     hashed_password = database.Column(database.String(20), unique=True, nullable=False)
@@ -39,6 +58,16 @@ with app.app_context():
 @app.route("/")
 def home():
     return
+
+@app.route("/login")
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = Person.query.filter_by(username=form.username.data).first()
+        if user:
+            login_user(user)
+            return redirect(url_for("route function here"))
+    return render_template("login.html", form=form)
 
 @login_manager.unauthorized_handler
 def unauthorized_callback():
