@@ -8,6 +8,9 @@ from flask_login import logout_user, login_user, login_required, current_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import length, InputRequired, ValidationError
+# used for hashing/encrypting password
+from flask_bcrypt import Bcrypt
+
 
 app = Flask(__name__)
 
@@ -66,6 +69,7 @@ def home():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
+
 
     return render_template("register.html", form=form)
 
