@@ -11,6 +11,8 @@ from wtforms.validators import length, InputRequired, ValidationError
 
 app = Flask(__name__)
 
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+
 # database declaration / login declaration
 login_manager = LoginManager()
 login_manager.init_app(app)
