@@ -24,7 +24,7 @@ LINK TO PULL REQUESTS(2):
 ################################################################################################################
 
 GROUP DOC LINK WITH GROUP PROPOSAL:
-(LINK TO GOOGLE GROUP DOC WILL GO HERE)
+https://docs.google.com/document/d/1HN1E3Tv-OE3NdwWXCNax21tR0YkfSTNV2PA_onieVAk/edit#
 
 ################################################################################################################
 
