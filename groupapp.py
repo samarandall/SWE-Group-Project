@@ -4,6 +4,7 @@ flask forms documentation'''
 
 import os
 from flask import Flask, url_for, redirect, render_template
+import flask
 from flask_sqlalchemy import SQLAlchemy
 # login information
 from flask_login import LoginManager, UserMixin
@@ -14,7 +15,7 @@ from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import length, InputRequired, ValidationError
 # used for hashing/encrypting password
 from flask_bcrypt import Bcrypt
-
+import api
 
 app = Flask(__name__)
 
@@ -23,7 +24,7 @@ bcrypt = Bcrypt(app)
 
 # fetches session key and Database URI from .env file
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DATABASE_URI")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI")
 
 # database declaration / login declaration
 login_manager = LoginManager()
@@ -31,7 +32,6 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 
 database = SQLAlchemy(app)
-
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -97,10 +97,34 @@ with app.app_context():
 # app routes
 # base route - NEEDS TO BE BUILT
 @app.route("/")
-def home():
+def index():
     """DOCSTRING TEMPLATE HOLDER"""
     #needs to return a base render_template to a .html file
-    return
+    if current_user.is_authenticated:
+        return flask.redirect(flask.url_for('home'))
+    return flask.redirect(flask.url_for('login'))
+
+@app.route("/home")
+#@login_required
+def home():
+    '''call api, give things to template'''
+    return flask.render_template('home.html')
+
+'''
+@app.route("/handle_search")
+#@login_required
+def handle_search():
+    return "handle_search"
+
+@app.route("/display_recipes")
+#@login_required
+def display_recipes():
+    return "display_recipes"
+'''
+@app.route("/user_saved_recipes")
+#@login_required
+def user_saved_recipes():
+    return "user_saved_recipes"
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -164,3 +188,6 @@ def unauthorized_callback():
     Parameters(none)
     Returns: redirect to home ie '/' route"""
     return redirect(url_for("home"))
+
+
+app.run(debug=True)

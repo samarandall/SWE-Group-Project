@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Recipe Search</title>
+        <link rel="stylesheet" href='/static/home.css' />
+    </head>
+    <body>
+        <div class="search">
+            <from method="POST" action="/handle_search">
+                <label for="recipe_name">Search for a recipe by name: </label>
+                <input id="recipe_name" type="text" name="recipe_name">
+                <br>
+                <label for="recipe_ingredient">Search for a recipe by ingredient: </label>
+                <input id="recipe_ingredient" type="text" name="recipe_ingredient">
+                <br>
+                <label for="recipe_name">Search for a recipe by name: </label>
+                <input id="recipe_name" type="text" name="recipe_name">
+                <br>
+            </form>
+        </div>
+    </body>
