@@ -19,8 +19,9 @@ import api
 
 app = Flask(__name__)
 
-# bcrypt object is utilized in password hashing/encryption
 bcrypt = Bcrypt(app)
+
+# bcrypt object is utilized in password hashing/encryption
 
 # fetches session key and Database URI from .env file
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
@@ -30,6 +31,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI")
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
+
 
 database = SQLAlchemy(app)
 
@@ -103,9 +105,9 @@ class Person(database.Model, UserMixin):
     id = database.Column(database.Integer, primary_key=True)
     username = database.Column(database.String(30), unique=True, nullable=False)
     email = database.Column(database.String(30), unique=True, nullable=False)
-    hashed_password = database.Column(database.String(30), nullable=False)
+    hashed_password = database.Column(database.String(), nullable=False)
 
-class UserRecipes(database.Model, UserMixin):
+class UserRecipes(database.Model):
     id = database.Column(database.Integer, primary_key=True)
     recipe_id = database.Column(database.Integer, unique=False, nullable=False)
     email = database.Column(database.String(30), unique=False, nullable=False)
@@ -169,12 +171,9 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         # generates a hashed password based on created bcrypt object
-        print("this is the password before: ", {form.user_password.data})
         bcrypt_hashed_password = bcrypt.generate_password_hash(form.user_password.data)
-        # adds user to database and commits them
-        print("this is the password after: ", {bcrypt_hashed_password})
         new_user = Person(
-            email=form.user_email.data, hashed_password=bcrypt_hashed_password)
+            email=form.user_email.data, hashed_password=bcrypt_hashed_password, username=form.username.data)
         database.session.add(new_user)
         database.session.commit()
         # redirects to login

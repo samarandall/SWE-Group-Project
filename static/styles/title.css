@@ -1,15 +1,24 @@
-h1{
-  color:darkgoldenrod
+h1 {
+  color: darkgoldenrod
 }
-h2{
-  color:cornflowerblue
+
+h2 {
+  color: cornflowerblue
 }
-h3{
-  color:crimson
+
+h3 {
+  color: crimson
 }
+
+
+
 body {
-    background-image: url("/static/images/food sharing.jpg");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-  }
+  width: 300px;
+  padding: 50px transparent white;
+  margin: 20px;
+
+  background-image: url("/static/images/food sharing.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
