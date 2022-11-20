@@ -48,6 +48,6 @@ def get_random_meal():
 
     return (meal_name, meal_category, meal_instructions, meal_ingredients)
 
-print(get_random_meal())
+#print(get_random_meal())
 #print(search_for_recipe_by_ingredient('chicken'))
 #print(search_for_recipe_by_name('pasta'))
