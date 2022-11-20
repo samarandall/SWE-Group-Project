@@ -168,11 +168,12 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         # generates a hashed password based on created bcrypt object
-        hashed_password = bcrypt.generate_password_hash(form.password.data)
+        print("this is the password before: ", {form.user_password.data})
+        bcrypt_hashed_password = bcrypt.generate_password_hash(form.user_password.data)
         # adds user to database and commits them
+        print("this is the password after: ", {bcrypt_hashed_password})
         new_user = Person(
-            email=form.user_email.data, hashed_password=hashed_password.data
-        )
+            email=form.user_email.data, hashed_password=bcrypt_hashed_password)
         database.session.add(new_user)
         database.session.commit()
         # redirects to login
