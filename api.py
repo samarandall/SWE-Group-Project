@@ -39,6 +39,7 @@ def get_random_meal():
     meal_name = meal['strMeal']
     meal_category = meal['strCategory']
     meal_instructions = meal['strInstructions']
+    meal_id = meal['idMeal']
     
     meal_ingredients = []
     for i in range(1,21):
@@ -46,7 +47,7 @@ def get_random_meal():
         if ingredient:
             meal_ingredients.append(ingredient)
 
-    return (meal_name, meal_category, meal_instructions, meal_ingredients)
+    return (meal_name, meal_category, meal_instructions, meal_ingredients, meal_id)
 
 #print(get_random_meal())
 #print(search_for_recipe_by_ingredient('chicken'))
