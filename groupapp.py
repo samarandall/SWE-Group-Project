@@ -100,15 +100,16 @@ class LoginForm(FlaskForm):
 
 class Person(database.Model, UserMixin):
     """Person class that will be used to store the email and password information"""
-
     id = database.Column(database.Integer, primary_key=True)
     username = database.Column(database.String(30), unique=True, nullable=False)
     email = database.Column(database.String(30), unique=True, nullable=False)
     hashed_password = database.Column(database.String(), nullable=False)
 
 class UserRecipes(database.Model):
+    """User based Recipes that are saved to be accessed to the user"""
     id = database.Column(database.Integer, primary_key=True)
     recipe_id = database.Column(database.Integer, unique=False, nullable=False)
+    #get rid of email, create a foreign key to tie to person class
     email = database.Column(database.String(30), unique=False, nullable=False)
 
 # database creation
@@ -125,11 +126,6 @@ def title():
     Returns: html file for display"""
     return render_template("title.html")
 
-@app.route("/home")
-#@login_required
-def home():
-    '''render the home template'''
-    return flask.render_template('home.html')
 
 @app.route('/display')
 @app.route('/display/<meal_id>')

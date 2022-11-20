@@ -1,0 +1,35 @@
+h1 {
+  color: darkgoldenrod
+}
+
+h2 {
+  color: crimson
+}
+
+h3 {
+  color: cornflowerblue
+}
+h4 {
+  color: rgb(33, 151, 33)
+}
+
+p {
+  font-family: 'Lucida Sans';
+}
+
+.white-box {
+  background-color: white;
+  color: black;
+  width: 50%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+
+body {
+
+  background-image: url("/static/images/food sharing.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
