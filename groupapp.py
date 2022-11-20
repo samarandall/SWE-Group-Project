@@ -134,25 +134,17 @@ def home():
 #@login_required
 def display(meal_id=None): #reroute to display
     if meal_id is None:
-        random_meal = api.get_random_meal()
-        return flask.render_template(
-            'display.html',
-            name=random_meal[0], 
-            category=random_meal[1], 
-            instructions=random_meal[2], 
-            ingredients=random_meal[3], 
-            id=random_meal[4]
-        )
+        meal = api.get_random_meal()
     else:
-        specific_meal = api.get_meal(meal_id)
-        return flask.render_template(
-            'display.html',
-            name=specific_meal[0], 
-            category=specific_meal[1], 
-            instructions=specific_meal[2], 
-            ingredients=specific_meal[3], 
-            id=specific_meal[4]
-        )
+        meal = api.get_meal(meal_id)
+    return flask.render_template(
+        'display.html',
+        name=meal[0],
+        category=meal[1],
+        instructions=meal[2],
+        ingredients=meal[3],
+        id=meal[4]
+    )
 
 @app.route("/save_recipe", methods=["POST"])
 #@login_required
