@@ -176,7 +176,7 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         # generates a hashed password based on created bcrypt object
-        hashed_password = bcrypt.generate_password_hash(form.password.data)
+        hashed_password = bcrypt.generate_password_hash(form.user_password.data)
         # adds user to database and commits them
         new_user = Person(
             email=form.user_email.data, hashed_password=hashed_password.data
