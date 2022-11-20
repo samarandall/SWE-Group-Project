@@ -51,6 +51,10 @@ class RegisterForm(FlaskForm):
         validators=[InputRequired(), length(min=9, max=30)],
         render_kw={"placeholder": "Password"},
     )
+    username = StringField( "Username",
+        validators=[InputRequired(), length(min=3, max=30)],
+        render_kw={"placeholder": "Your Username"},
+    )
     submit = SubmitField("Register User")
 
     def validate_email(self, user_email):
@@ -73,10 +77,7 @@ class LoginForm(FlaskForm):
         validators=[InputRequired("Please enter your email here"), email(message="Invalid. Please enter a valid email", allow_empty_local=True), length(min=3, max=30)],
         render_kw={"placeholder": "Your Email"},
     )
-    username = StringField( "Username",
-        validators=[InputRequired(), length(min=3, max=30)],
-        render_kw={"placeholder": "Your Username"},
-    )
+
     user_password = PasswordField( "Password",
         validators=[InputRequired("Please enter your password here"), length(min=9, max=30)],
         render_kw={"placeholder": "Password"},
