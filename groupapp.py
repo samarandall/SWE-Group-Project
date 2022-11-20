@@ -85,9 +85,13 @@ class Person(database.Model, UserMixin):
     """Person class that will be used to store the email and password information"""
 
     id = database.Column(database.Integer, primary_key=True)
-    email = database.Column(database.String(30), unique=True, nullable=False)
+    email = database.Column(database.String(80), unique=True, nullable=False)
     hashed_password = database.Column(database.String(30), nullable=False)
 
+class UserRecipes(database.Model, UserMixin):
+    id = database.Column(database.Integer, primary_key=True)
+    recipe_id = database.Column(database.Integer, unique=False, nullable=False)
+    person = database.Column(database.String(80), unique=False, nullable=False)
 
 # database creation
 with app.app_context():
@@ -107,7 +111,7 @@ def index():
 @app.route("/home")
 #@login_required
 def home():
-    '''call api, give things to template'''
+    '''render the home template'''
     return flask.render_template('home.html')
 
 @app.route('/display')
@@ -136,6 +140,7 @@ def display(meal_id=None): #reroute to display
         )
 
 @app.route("save_recipe", methods=["POST"])
+#@login_required
 def save_recipe():
     movie_id = flask.request.form
     return

@@ -18,7 +18,7 @@ LINK TO PULL REQUESTS(2):
 
 SAM RANDALL
 LINK TO PULL REQUESTS(2):
-1)
+1) https://github.com/samarandall/SWE-Group-Project/pull/1
 2)
 
 ################################################################################################################
