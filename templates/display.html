@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Meal</title>
+        <link rel="stylesheet" href='/static/display.css' />
+    </head>
+    <body>
+        <div class="content">
+            <h1>{{name}}</h1>
+            <h2>{{category}}</h2>
+            <p>Ingredients:</p>
+            <ul>
+            {% for ingredient in ingredients%}
+                <li>{{ingredient}}</li>
+            {% endfor %}
+            </ul>
+            <p>Cooking Instructions:</p>
+            <p>{{instructions}}</p>
+        </div>
+        <form method="POST" action="save_recipe">
+            <input type="text" value={{id}}>
+            <input type="button" value="Save this recipe">
+        </form>
+
+
+    </body>
+</html>
