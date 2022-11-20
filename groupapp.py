@@ -11,8 +11,8 @@ from flask_login import LoginManager, UserMixin
 from flask_login import logout_user, login_user, login_required, current_user
 # used to create form objects such as the search bar
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField
-from wtforms.validators import length, InputRequired, ValidationError
+from wtforms import EmailField, StringField, SubmitField, PasswordField
+from wtforms.validators import email, length, InputRequired, ValidationError
 # used for hashing/encrypting password
 from flask_bcrypt import Bcrypt
 import api
@@ -43,8 +43,8 @@ class RegisterForm(FlaskForm):
     """Class that will be utilized by register.html to create the user entry field
     objects that will transfer the data"""
 
-    user_email = StringField(
-        validators=[InputRequired(), length(min=3, max=30)],
+    user_email = EmailField(
+        validators=[InputRequired(), email(message="Invalid. Please enter a valid email", allow_empty_local=True),length(min=3, max=30)],
         render_kw={"placeholder": "Your Email"},
     )
     user_password = PasswordField(
@@ -53,28 +53,43 @@ class RegisterForm(FlaskForm):
     )
     submit = SubmitField("Register User")
 
+    def validate_email(self, user_email):
+        """function used in Registration form to determine if the username
+        pre-exists raising an error
+        Parameters: (string-username)
+        Returns: Error"""
+        existing_user = Person.query.filter_by(email=user_email.data).first()
+        if existing_user:
+            raise ValidationError(
+                "Email already on file, please login via link or register a different one."
+            )
+
 
 class LoginForm(FlaskForm):
     """Class that will be utilized by login.html to create the user entry field
     objects that will transfer the data"""
 
-    user_email = StringField(
-        validators=[InputRequired(), length(min=3, max=30)],
+    user_email = EmailField( "Email",
+        validators=[InputRequired("Please enter your email here"), email(message="Invalid. Please enter a valid email", allow_empty_local=True), length(min=3, max=30)],
         render_kw={"placeholder": "Your Email"},
     )
-    user_password = PasswordField(
-        validators=[InputRequired(), length(min=9, max=30)],
+    username = StringField( "Username",
+        validators=[InputRequired(), length(min=3, max=30)],
+        render_kw={"placeholder": "Your Username"},
+    )
+    user_password = PasswordField( "Password",
+        validators=[InputRequired("Please enter your password here"), length(min=9, max=30)],
         render_kw={"placeholder": "Password"},
     )
     submit = SubmitField("Login User")
 
     # to do: how to validate if something is an email? What requires a string to be an email
-    def validate_email(self, email):
+    def validate_email(self, user_email):
         """Function used by Loginform that checks to see if the email is valid and
         that the email exists in our database
         Parameters: (email entered by user)
         Returns: Validation Error"""
-        existing_email = Person.query.filter_by(email=email.data).first()
+        existing_email = Person.query.filter_by(email=user_email.data).first()
         if not existing_email:
             raise ValidationError(
                 "This email is not in our records. Please sign up with your email."
@@ -85,7 +100,8 @@ class Person(database.Model, UserMixin):
     """Person class that will be used to store the email and password information"""
 
     id = database.Column(database.Integer, primary_key=True)
-    email = database.Column(database.String(80), unique=True, nullable=False)
+    username = database.Column(database.String(30), unique=True, nullable=False)
+    email = database.Column(database.String(30), unique=True, nullable=False)
     hashed_password = database.Column(database.String(30), nullable=False)
 
 class UserRecipes(database.Model, UserMixin):
@@ -101,12 +117,11 @@ with app.app_context():
 # app routes
 # base route - NEEDS TO BE BUILT
 @app.route("/")
-def index():
-    """DOCSTRING TEMPLATE HOLDER"""
-    #needs to return a base render_template to a .html file
-    if current_user.is_authenticated:
-        return flask.redirect(flask.url_for('home'))
-    return flask.redirect(flask.url_for('login'))
+def title():
+    """renders a base page that allows user to be redirected to login or signup
+    Parameters: (none)
+    Returns: html file for display"""
+    return render_template("title.html")
 
 @app.route("/home")
 #@login_required
