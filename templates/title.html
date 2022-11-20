@@ -6,18 +6,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="static/styles/title.css" rel="stylesheet" />
+    <style>
+    </style>
     <title>Title Page</title>
 </head>
 
 <body>
     <center>
-        <h2> <b> Welcome to </b></h2>
-        <h1> <b>CULINARY EXPLORER</b></h1>
-        <h2>By Sam Randall and Nick Montelongo</h2>
-        <h3> Click the link below to sign up for our service</h3><br>
-        <a href="{{url_for('register')}}">Signup Page</a><br>
-        <h3> Click the link below to login if you have a username.</h3><br>
-        <a href="{{url_for('login')}}">Login Page</a><br>
+        <div class="white-box">
+            <h2> <b> Welcome to </b></h2>
+            <h1>
+                <p><b>CULINARY EXPLORER</b>
+            </h1>
+            </p>
+            <h2>By Sam Randall and Nick Montelongo</h2>
+            <img src="static/images/hand_with_strawberries.jpg" alt="app logo" width="400" height="400">
+            <h3>Click the link below to sign up for our service</h3><br>
+            <a href="{{url_for('register')}}">Signup Page</a><br>
+            <h3>Click the link below to login if you have a username.</h3><br>
+            <a href="{{url_for('login')}}">Login Page</a><br>
+    </div>
     </center>
 </body>
 

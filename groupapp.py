@@ -19,9 +19,8 @@ import api
 
 app = Flask(__name__)
 
-bcrypt = Bcrypt(app)
-
 # bcrypt object is utilized in password hashing/encryption
+bcrypt = Bcrypt(app)
 
 # fetches session key and Database URI from .env file
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")

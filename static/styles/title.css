@@ -9,13 +9,17 @@ h2 {
 h3 {
   color: crimson
 }
+p { font-family: 'Lucida Sans'; }
 
-
-
+.white-box {
+  background-color: white;
+  color: black;
+  width: 50%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
 body {
-  width: 300px;
-  padding: 50px transparent white;
-  margin: 20px;
 
   background-image: url("/static/images/food sharing.jpg");
   background-repeat: no-repeat;
