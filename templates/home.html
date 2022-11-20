@@ -1,19 +1,12 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Recipe Search</title>
+        <title>Home</title>
         <link rel="stylesheet" href='/static/home.css' />
     </head>
     <body>
-        <div class="search">
-            <from method="POST" action="/handle_search">
-                <label for="recipe_search">Search for a recipe: </label>
-                <input id="recipe_ingredient" type="text" name="recipe_ingredient">
-                <input id="ingredient" type="radio" name="search_type" value="Ingredient">
-                <label for="ingredient">Ingredient<label><br>
-                <input id="name" type="radio" name="search_type" value="Ingredient">
-                <label for="name">Name of Recipe<label><br>
-                <input type="submit" value="submit">
-            </form>
-        </div>
+        <form method="GET" action="/display">
+            <input type="submit" value="Random Recipe">
+        </form>
+
     </body>

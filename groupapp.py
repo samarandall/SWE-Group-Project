@@ -110,22 +110,36 @@ def home():
     '''call api, give things to template'''
     return flask.render_template('home.html')
 
-'''
-@app.route("/handle_search")
+@app.route('/display')
+@app.route('/display/<meal_id>')
 #@login_required
-def handle_search():
-    return "handle_search"
+def display(meal_id=None): #reroute to display
+    if meal_id is None:
+        random_meal = api.get_random_meal()
+        return flask.render_template(
+            'display.html',
+            name=random_meal[0], 
+            category=random_meal[1], 
+            instructions=random_meal[2], 
+            ingredients=random_meal[3], 
+            id=random_meal[4]
+        )
+    else:
+        specific_meal = api.get_meal(meal_id)
+        return flask.render_template(
+            'display.html',
+            name=specific_meal[0], 
+            category=specific_meal[1], 
+            instructions=specific_meal[2], 
+            ingredients=specific_meal[3], 
+            id=specific_meal[4]
+        )
 
-@app.route("/display_recipes")
-#@login_required
-def display_recipes():
-    return "display_recipes"
-'''
+
 @app.route("/user_saved_recipes")
 #@login_required
 def user_saved_recipes():
     return "user_saved_recipes"
-
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -190,4 +204,5 @@ def unauthorized_callback():
     return redirect(url_for("home"))
 
 
-app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=True)
