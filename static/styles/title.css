@@ -3,13 +3,16 @@ h1 {
 }
 
 h2 {
-  color: cornflowerblue
+  color: crimson
 }
 
 h3 {
-  color: crimson
+  color: cornflowerblue
 }
-p { font-family: 'Lucida Sans'; }
+
+p {
+  font-family: 'Lucida Sans';
+}
 
 .white-box {
   background-color: white;
@@ -19,6 +22,7 @@ p { font-family: 'Lucida Sans'; }
   margin: 8px 0;
   box-sizing: border-box;
 }
+
 body {
 
   background-image: url("/static/images/food sharing.jpg");

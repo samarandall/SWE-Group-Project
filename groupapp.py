@@ -176,7 +176,7 @@ def register():
         database.session.add(new_user)
         database.session.commit()
         # redirects to login
-        return redirect(url_for("login"))
+        return redirect(url_for("title"))
     # renders path page based on .html form (need to set up)
     return render_template("register.html", form=form)
 
