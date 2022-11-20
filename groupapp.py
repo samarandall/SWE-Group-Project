@@ -11,8 +11,8 @@ from flask_login import LoginManager, UserMixin
 from flask_login import logout_user, login_user, login_required, current_user
 # used to create form objects such as the search bar
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField
-from wtforms.validators import email, length, InputRequired, ValidationError, email_validator
+from wtforms import EmailField, StringField, SubmitField, PasswordField
+from wtforms.validators import email, length, InputRequired, ValidationError
 # used for hashing/encrypting password
 from flask_bcrypt import Bcrypt
 import api
@@ -43,8 +43,8 @@ class RegisterForm(FlaskForm):
     """Class that will be utilized by register.html to create the user entry field
     objects that will transfer the data"""
 
-    user_email = StringField(
-        validators=[InputRequired(), length(min=3, max=30)],
+    user_email = EmailField(
+        validators=[InputRequired(), email(message="Invalid. Please enter a valid email", allow_empty_local=True),length(min=3, max=30)],
         render_kw={"placeholder": "Your Email"},
     )
     user_password = PasswordField(
@@ -69,16 +69,16 @@ class LoginForm(FlaskForm):
     """Class that will be utilized by login.html to create the user entry field
     objects that will transfer the data"""
 
-    user_email = StringField(
-        validators=[InputRequired(), length(min=3, max=30)],
+    user_email = EmailField( "Email",
+        validators=[InputRequired("Please enter your email here"), email(message="Invalid. Please enter a valid email", allow_empty_local=True), length(min=3, max=30)],
         render_kw={"placeholder": "Your Email"},
     )
-    username = StringField(
+    username = StringField( "Username",
         validators=[InputRequired(), length(min=3, max=30)],
         render_kw={"placeholder": "Your Username"},
     )
-    user_password = PasswordField(
-        validators=[InputRequired(), length(min=9, max=30)],
+    user_password = PasswordField( "Password",
+        validators=[InputRequired("Please enter your password here"), length(min=9, max=30)],
         render_kw={"placeholder": "Password"},
     )
     submit = SubmitField("Login User")
