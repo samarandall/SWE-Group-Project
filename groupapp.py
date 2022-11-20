@@ -113,12 +113,11 @@ with app.app_context():
 # app routes
 # base route - NEEDS TO BE BUILT
 @app.route("/")
-def index():
-    """DOCSTRING TEMPLATE HOLDER"""
-    #needs to return a base render_template to a .html file
-    if current_user.is_authenticated:
-        return flask.redirect(flask.url_for('home'))
-    return flask.redirect(flask.url_for('login'))
+def title():
+    """renders a base page that allows user to be redirected to login or signup
+    Parameters: (none)
+    Returns: html file for display"""
+    return render_template("title.html")
 
 @app.route("/home")
 #@login_required
