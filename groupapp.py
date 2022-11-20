@@ -12,7 +12,7 @@ from flask_login import logout_user, login_user, login_required, current_user
 # used to create form objects such as the search bar
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
-from wtforms.validators import length, InputRequired, ValidationError
+from wtforms.validators import email, length, InputRequired, ValidationError, email_validator
 # used for hashing/encrypting password
 from flask_bcrypt import Bcrypt
 import api
@@ -52,6 +52,17 @@ class RegisterForm(FlaskForm):
         render_kw={"placeholder": "Password"},
     )
     submit = SubmitField("Register User")
+
+    def validate_email(self, email):
+        """function used in Registration form to determine if the username
+        pre-exists raising an error
+        Parameters: (string-username)
+        Returns: Error"""
+        existing_user = Person.query.filter_by(email=email.data).first()
+        if existing_user:
+            raise ValidationError(
+                "Email already on file, please login or register a different one."
+            )
 
 
 class LoginForm(FlaskForm):
