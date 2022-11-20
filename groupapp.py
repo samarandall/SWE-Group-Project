@@ -107,7 +107,7 @@ class Person(database.Model, UserMixin):
 class UserRecipes(database.Model, UserMixin):
     id = database.Column(database.Integer, primary_key=True)
     recipe_id = database.Column(database.Integer, unique=False, nullable=False)
-    person = database.Column(database.String(80), unique=False, nullable=False)
+    email = database.Column(database.String(30), unique=False, nullable=False)
 
 # database creation
 with app.app_context():
@@ -154,10 +154,15 @@ def display(meal_id=None): #reroute to display
             id=specific_meal[4]
         )
 
-@app.route("save_recipe", methods=["POST"])
+@app.route("/save_recipe", methods=["POST"])
 #@login_required
 def save_recipe():
-    movie_id = flask.request.form
+    form_data = flask.request.form
+    recipe_id = form_data['recipe_id']
+    email = current_user.email
+    save_recipe = UserRecipes(recipe_id=recipe_id,email=email)
+    database.session.add(save_recipe)
+    database.session.commit()
     return
 
 @app.route("/user_saved_recipes")
