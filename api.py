@@ -34,8 +34,19 @@ def get_random_meal():
     )
 
     data = response.json()
+    meal = data['meals'][0]
+    
+    meal_name = meal['strMeal']
+    meal_category = meal['strCategory']
+    meal_instructions = meal['strInstructions']
+    
+    meal_ingredients = []
+    for i in range(1,21):
+        ingredient = meal[f'strIngredient{i}']
+        if ingredient:
+            meal_ingredients.append(ingredient)
 
-    return data['meals']
+    return (meal_name, meal_category, meal_instructions, meal_ingredients)
 
 print(get_random_meal())
 #print(search_for_recipe_by_ingredient('chicken'))
