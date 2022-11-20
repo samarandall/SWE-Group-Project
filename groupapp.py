@@ -135,6 +135,10 @@ def display(meal_id=None): #reroute to display
             id=specific_meal[4]
         )
 
+@app.route("save_recipe", methods=["POST"])
+def save_recipe():
+    movie_id = flask.request.form
+    return
 
 @app.route("/user_saved_recipes")
 #@login_required
