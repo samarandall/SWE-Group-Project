@@ -1,0 +1,15 @@
+h1{
+  color:darkgoldenrod
+}
+h2{
+  color:cornflowerblue
+}
+h3{
+  color:crimson
+}
+body {
+    background-image: url("/static/images/food sharing.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  }

@@ -18,7 +18,7 @@
             {{ form.username }}
             {{ form.user_password}}
             {{ form.submit }}
-            {% for error in form.username.errors %} <p style="color: rgb(100,0,0);" ,style="font-size:400%" ;> <b>
+            {% for error in form.user_email.errors %} <p style="color: rgb(100,0,0);" ,style="font-size:400%" ;> <b>
                     {{error}} </b></p> {% endfor %}
         </form>
         <h3> Already a member? Click here to log in</h3>
