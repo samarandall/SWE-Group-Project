@@ -109,8 +109,14 @@ class UserRecipes(database.Model):
     """User based Recipes that are saved to be accessed to the user"""
     id = database.Column(database.Integer, primary_key=True)
     recipe_id = database.Column(database.Integer, unique=False, nullable=False)
-    #get rid of email, create a foreign key to tie to person class
-    email = database.Column(database.String(30), unique=False, nullable=False)
+    #foreign key to link recipes to person(user)
+    #maybe add more stuff to database? 
+    user_id = database.Column(
+        database.Integer,
+        database.ForeignKey("person.id"),
+        unique=False,
+        nullable=False,
+    )
 
 # database creation
 with app.app_context():
