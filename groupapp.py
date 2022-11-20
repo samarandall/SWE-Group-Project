@@ -53,15 +53,15 @@ class RegisterForm(FlaskForm):
     )
     submit = SubmitField("Register User")
 
-    def validate_email(self, email):
+    def validate_email(self, user_email):
         """function used in Registration form to determine if the username
         pre-exists raising an error
         Parameters: (string-username)
         Returns: Error"""
-        existing_user = Person.query.filter_by(email=email.data).first()
+        existing_user = Person.query.filter_by(email=user_email.data).first()
         if existing_user:
             raise ValidationError(
-                "Email already on file, please login or register a different one."
+                "Email already on file, please login via link or register a different one."
             )
 
 
@@ -73,6 +73,10 @@ class LoginForm(FlaskForm):
         validators=[InputRequired(), length(min=3, max=30)],
         render_kw={"placeholder": "Your Email"},
     )
+    username = StringField(
+        validators=[InputRequired(), length(min=3, max=30)],
+        render_kw={"placeholder": "Your Username"},
+    )
     user_password = PasswordField(
         validators=[InputRequired(), length(min=9, max=30)],
         render_kw={"placeholder": "Password"},
@@ -80,12 +84,12 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Login User")
 
     # to do: how to validate if something is an email? What requires a string to be an email
-    def validate_email(self, email):
+    def validate_email(self, user_email):
         """Function used by Loginform that checks to see if the email is valid and
         that the email exists in our database
         Parameters: (email entered by user)
         Returns: Validation Error"""
-        existing_email = Person.query.filter_by(email=email.data).first()
+        existing_email = Person.query.filter_by(email=user_email.data).first()
         if not existing_email:
             raise ValidationError(
                 "This email is not in our records. Please sign up with your email."
@@ -96,6 +100,7 @@ class Person(database.Model, UserMixin):
     """Person class that will be used to store the email and password information"""
 
     id = database.Column(database.Integer, primary_key=True)
+    username = database.Column(database.String(30), unique=True, nullable=False)
     email = database.Column(database.String(30), unique=True, nullable=False)
     hashed_password = database.Column(database.String(30), nullable=False)
 

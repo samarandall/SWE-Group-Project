@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+</head>
+
+<body>
+    <center>
+        <h1> <b> APP NAME: Login</b></h1>
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            {{ form.user_email }}
+            {{ form.user_password}}
+            {{ form.submit }}
+            {% for error in form.username.errors %} <p style="color: rgb(100,0,0);" ,style="font-size:400%" ;> <b>
+                    {{error}} </b></p> {% endfor %}
+        </form>
+        <h3> Don't have an account? Sign up here</h3>
+        <a href="{{url_for('register')}}">Register Page</a><br>
+    </center>
+</body>
+
+</html>
