@@ -11,7 +11,7 @@ from flask_login import LoginManager, UserMixin
 from flask_login import logout_user, login_user, login_required, current_user
 # used to create form objects such as the search bar
 from flask_wtf import FlaskForm
-from wtforms import EmailField, StringField, SubmitField, PasswordField
+from wtforms import EmailField, SubmitField, PasswordField
 from wtforms.validators import email, length, InputRequired, ValidationError
 # used for hashing/encrypting password
 from flask_bcrypt import Bcrypt
@@ -218,8 +218,8 @@ def unauthorized_callback():
     """function to handle attempted unauthorized access, will redirect
     to homepage
     Parameters(none)
-    Returns: redirect to home ie '/' route"""
-    return redirect(url_for("home"))
+    Returns: redirect to beginning route ie '/' route"""
+    return redirect(url_for("title"))
 
 
 if __name__ == "__main__":

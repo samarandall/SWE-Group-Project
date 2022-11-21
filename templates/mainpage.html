@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moviegoers Guide to the Galaxy Information Page</title>
+    <link href="static/styles/main.css" rel="stylesheet" />
+</head>
+
+<body>
+    <h2>User Email: {% if current_user.is_authenticated %}
+        {{ user }}
+        {% endif %}</h2>
+    <h3> Finished Browsing Recipes?
+        <a href="{{url_for('logout')}}">Logout Page</a><br>
+    </h3>
+    <center>
+        <h1> <b> Culinary Explorer </b></h1>
+    </center>
+</body>
+
+</html>
