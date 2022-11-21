@@ -98,7 +98,7 @@ class Person(database.Model, UserMixin):
     """Person class that will be used to store the email and password information"""
     id = database.Column(database.Integer, primary_key=True)
     email = database.Column(database.String(30), unique=True, nullable=False)
-    hashed_password = database.Column(database.String(), nullable=False)
+    hashed_password = database.Column(database.LargeBinary(60), nullable=False)
 
 class UserRecipes(database.Model):
     """User based Recipes that are saved to be accessed to the user"""
