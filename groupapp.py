@@ -52,16 +52,12 @@ class RegisterForm(FlaskForm):
         validators=[InputRequired(), length(min=9, max=30)],
         render_kw={"placeholder": "Password"},
     )
-    username = StringField( "Username",
-        validators=[InputRequired(), length(min=3, max=30)],
-        render_kw={"placeholder": "Your Username"},
-    )
     submit = SubmitField("Register User")
 
     def validate_email(self, user_email):
-        """function used in Registration form to determine if the username
+        """function used in Registration form to determine if the user email
         pre-exists raising an error
-        Parameters: (string-username)
+        Parameters: (string-user email)
         Returns: Error"""
         existing_user = Person.query.filter_by(email=user_email.data).first()
         if existing_user:
@@ -101,7 +97,6 @@ class LoginForm(FlaskForm):
 class Person(database.Model, UserMixin):
     """Person class that will be used to store the email and password information"""
     id = database.Column(database.Integer, primary_key=True)
-    username = database.Column(database.String(30), unique=True, nullable=False)
     email = database.Column(database.String(30), unique=True, nullable=False)
     hashed_password = database.Column(database.String(), nullable=False)
 
@@ -174,7 +169,7 @@ def register():
         # generates a hashed password based on created bcrypt object
         bcrypt_hashed_password = bcrypt.generate_password_hash(form.user_password.data)
         new_user = Person(
-            email=form.user_email.data, hashed_password=bcrypt_hashed_password, username=form.username.data)
+            email=form.user_email.data, hashed_password=bcrypt_hashed_password)
         database.session.add(new_user)
         database.session.commit()
         # redirects to login
@@ -192,7 +187,7 @@ def login():
     Returns: redirects to either movieinfo or login"""
     form = LoginForm()
     if form.validate_on_submit():
-        user = Person.query.filter_by(email=form.username.data).first()
+        user = Person.query.filter_by(email=form.user_email.data).first()
         if user:
             if bcrypt.check_password_hash(user.hashed_password, form.user_password.data):
                 login_user(user)
