@@ -235,7 +235,7 @@ def logout():
     Parameters: (none)
     Returns: redirect to login"""
     logout_user()
-    return redirect(url_for("user_login"))
+    return redirect(url_for("login"))
 
 
 @app.route("/main", methods=["Get", "POST"])
