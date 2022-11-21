@@ -1,18 +1,21 @@
-'''Main APP file, instantiates the app, database, encryptor, as
+"""Main APP file, instantiates the app, database, encryptor, as
 well as contains the definitions for the table models and the
-flask forms documentation'''
+flask forms documentation"""
 
 import os
 from flask import Flask, url_for, redirect, render_template
 import flask
 from flask_sqlalchemy import SQLAlchemy
+
 # login information
 from flask_login import LoginManager, UserMixin
 from flask_login import logout_user, login_user, login_required, current_user
+
 # used to create form objects such as the search bar
 from flask_wtf import FlaskForm
 from wtforms import EmailField, SubmitField, PasswordField
 from wtforms.validators import email, length, InputRequired, ValidationError
+
 # used for hashing/encrypting password
 from flask_bcrypt import Bcrypt
 import api
@@ -24,7 +27,7 @@ bcrypt = Bcrypt(app)
 
 # fetches session key and Database URI from .env file
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DATABASE_URI")
 
 # database declaration / login declaration
 login_manager = LoginManager()
@@ -33,6 +36,7 @@ login_manager.login_view = "login"
 
 
 database = SQLAlchemy(app)
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -45,7 +49,13 @@ class RegisterForm(FlaskForm):
     objects that will transfer the data"""
 
     user_email = EmailField(
-        validators=[InputRequired(), email(message="Invalid. Please enter a valid email", allow_empty_local=True),length(min=3, max=30)],
+        validators=[
+            InputRequired(),
+            email(
+                message="Invalid. Please enter a valid email", allow_empty_local=True
+            ),
+            length(min=3, max=30),
+        ],
         render_kw={"placeholder": "Your Email"},
     )
     user_password = PasswordField(
@@ -70,13 +80,24 @@ class LoginForm(FlaskForm):
     """Class that will be utilized by login.html to create the user entry field
     objects that will transfer the data"""
 
-    user_email = EmailField( "Email",
-        validators=[InputRequired("Please enter your email here"), email(message="Invalid. Please enter a valid email", allow_empty_local=True), length(min=3, max=30)],
+    user_email = EmailField(
+        "Email",
+        validators=[
+            InputRequired("Please enter your email here"),
+            email(
+                message="Invalid. Please enter a valid email", allow_empty_local=True
+            ),
+            length(min=3, max=30),
+        ],
         render_kw={"placeholder": "Your Email"},
     )
 
-    user_password = PasswordField( "Password",
-        validators=[InputRequired("Please enter your password here"), length(min=9, max=30)],
+    user_password = PasswordField(
+        "Password",
+        validators=[
+            InputRequired("Please enter your password here"),
+            length(min=9, max=30),
+        ],
         render_kw={"placeholder": "Password"},
     )
     submit = SubmitField("Login User")
@@ -96,22 +117,26 @@ class LoginForm(FlaskForm):
 
 class Person(database.Model, UserMixin):
     """Person class that will be used to store the email and password information"""
+
     id = database.Column(database.Integer, primary_key=True)
     email = database.Column(database.String(30), unique=True, nullable=False)
     hashed_password = database.Column(database.LargeBinary(60), nullable=False)
 
+
 class UserRecipes(database.Model):
     """User based Recipes that are saved to be accessed to the user"""
+
     id = database.Column(database.Integer, primary_key=True)
     recipe_id = database.Column(database.Integer, unique=False, nullable=False)
-    #foreign key to link recipes to person(user)
-    #maybe add more stuff to database? 
+    # foreign key to link recipes to person(user)
+    # maybe add more stuff to database?
     user_id = database.Column(
         database.Integer,
         database.ForeignKey("person.id"),
         unique=False,
         nullable=False,
     )
+
 
 # database creation
 with app.app_context():
@@ -128,38 +153,41 @@ def title():
     return render_template("title.html")
 
 
-@app.route('/display')
-@app.route('/display/<meal_id>')
-#@login_required
-def display(meal_id=None): #reroute to display
+@app.route("/display")
+@app.route("/display/<meal_id>")
+# @login_required
+def display(meal_id=None):  # reroute to display
     if meal_id is None:
         meal = api.get_random_meal()
     else:
         meal = api.get_meal(meal_id)
     return flask.render_template(
-        'display.html',
+        "display.html",
         name=meal[0],
         category=meal[1],
         instructions=meal[2],
         ingredients=meal[3],
-        id=meal[4]
+        id=meal[4],
     )
 
+
 @app.route("/save_recipe", methods=["POST"])
-#@login_required
+# @login_required
 def save_recipe():
     form_data = flask.request.form
-    recipe_id = form_data['recipe_id']
+    recipe_id = form_data["recipe_id"]
     email = current_user.email
-    save_recipe = UserRecipes(recipe_id=recipe_id,email=email)
+    save_recipe = UserRecipes(recipe_id=recipe_id, email=email)
     database.session.add(save_recipe)
     database.session.commit()
     return
 
+
 @app.route("/user_saved_recipes")
-#@login_required
+# @login_required
 def user_saved_recipes():
     return "user_saved_recipes"
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -169,7 +197,8 @@ def register():
         # generates a hashed password based on created bcrypt object
         bcrypt_hashed_password = bcrypt.generate_password_hash(form.user_password.data)
         new_user = Person(
-            email=form.user_email.data, hashed_password=bcrypt_hashed_password)
+            email=form.user_email.data, hashed_password=bcrypt_hashed_password
+        )
         database.session.add(new_user)
         database.session.commit()
         # redirects to login
@@ -189,7 +218,9 @@ def login():
     if form.validate_on_submit():
         user = Person.query.filter_by(email=form.user_email.data).first()
         if user:
-            if bcrypt.check_password_hash(user.hashed_password, form.user_password.data):
+            if bcrypt.check_password_hash(
+                user.hashed_password, form.user_password.data
+            ):
                 login_user(user)
                 return redirect(url_for("main"))
     return render_template("login.html", form=form)
