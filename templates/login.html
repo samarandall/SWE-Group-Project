@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="static/styles/title.css" rel="stylesheet" />
+    <link href="static/styles/login.css" rel="stylesheet" />
     <title>Login Page</title>
 </head>
 
@@ -15,10 +15,10 @@
         <h1> <b> CULINARY EXPLORER: Login</b></h1>
         <form method="POST" action="">
             {{ form.hidden_tag() }}
-            <h3>Please enter a valid email address: </h3>
-            {{ form.user_email }}
-            <h3>Enter a password 9 to 30 characters</h3>
-            {{ form.user_password}}
+            <h3>Please enter a valid email address:
+            {{ form.user_email }}</h3>
+            <h3>Enter a password 9 to 30 characters
+            {{ form.user_password}}</h3>
             {{ form.submit }}
             {% for error in form.username.errors %} <p style="color: rgb(100,0,0);" ,style="font-size:400%" ;> <b>
                     {{error}} </b></p> {% endfor %}

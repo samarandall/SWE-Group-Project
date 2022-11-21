@@ -35,11 +35,11 @@ FLY.IO DEPLOYMENT LINK:
 
 WHAT WE LEARNED AND ENJOYED ABOUT THE PROJECT:
 1) Learning how to apply the basics of creating a password and verifying it for login
-2)
+2) Working with new APIs that we haven't utilized before
 
 WHAT WE WANTED TO LEARN OR DIDN'T ENJOY ABOUT THE PROJECT:
 1)How to implement a search bar for queries and how to effectively do that
-2)
+2)Learning how to better utilize html features to build a professional looking website
 
 ################################################################################################################
 
