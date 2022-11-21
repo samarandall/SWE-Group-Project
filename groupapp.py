@@ -241,8 +241,9 @@ def logout():
 @app.route("/main", methods=["Get", "POST"])
 @login_required
 def main():
+    user = current_user.email
     """DOCSTRING TEMPLATE HOLDER"""
-    return render_template("mainpage.html")
+    return render_template("mainpage.html", user=user)
 
 
 @login_manager.unauthorized_handler
