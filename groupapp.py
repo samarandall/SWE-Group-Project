@@ -64,7 +64,7 @@ class RegisterForm(FlaskForm):
     )
     submit = SubmitField("Register User")
 
-    def validate_email(self, user_email):
+    def validate_user_email(self, user_email):
         """function used in Registration form to determine if the user email
         pre-exists raising an error
         Parameters: (string-user email)
@@ -72,8 +72,9 @@ class RegisterForm(FlaskForm):
         existing_user = Person.query.filter_by(email=user_email.data).first()
         if existing_user:
             raise ValidationError(
-                "Email already on file, please login via link or register a different one."
+                "Email already on file, please login via the link below or register a different one."
             )
+
 
 
 class LoginForm(FlaskForm):
@@ -103,7 +104,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Login User")
 
     # to do: how to validate if something is an email? What requires a string to be an email
-    def validate_email(self, user_email):
+    def validate_user_email(self, user_email):
         """Function used by Loginform that checks to see if the email is valid and
         that the email exists in our database
         Parameters: (email entered by user)
@@ -120,7 +121,7 @@ class Person(database.Model, UserMixin):
 
     id = database.Column(database.Integer, primary_key=True)
     email = database.Column(database.String(30), unique=True, nullable=False)
-    hashed_password = database.Column(database.LargeBinary(60), nullable=False)
+    hashed_password = database.Column(database.LargeBinary(60), unique=False, nullable=False)
 
 
 class UserRecipes(database.Model):
