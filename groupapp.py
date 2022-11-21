@@ -6,16 +6,13 @@ import os
 from flask import Flask, url_for, redirect, render_template
 import flask
 from flask_sqlalchemy import SQLAlchemy
-
 # login information
 from flask_login import LoginManager, UserMixin
 from flask_login import logout_user, login_user, login_required, current_user
-
 # used to create form objects such as the search bar
 from flask_wtf import FlaskForm
 from wtforms import EmailField, SubmitField, PasswordField
 from wtforms.validators import email, length, InputRequired, ValidationError
-
 # used for hashing/encrypting password
 from flask_bcrypt import Bcrypt
 import api
@@ -216,6 +213,7 @@ def login():
     Parameters: (none)
     Returns: redirects to either movieinfo or login"""
     form = LoginForm()
+    password_error = ""
     if form.validate_on_submit():
         user = Person.query.filter_by(email=form.user_email.data).first()
         if user:
@@ -224,7 +222,9 @@ def login():
             ):
                 login_user(user)
                 return redirect(url_for("main"))
-    return render_template("login.html", form=form)
+            else:
+                password_error = "The password you have entered does not match"
+    return render_template("login.html", error=password_error, form=form)
 
 
 @app.route("/logout", methods=["GET", "POST"])

@@ -12,20 +12,24 @@
 <body>
     <center>
         <div class="white-box">
-        <h1> <b> CULINARY EXPLORER: Login</b></h1>
-        <form method="POST" action="">
-            {{ form.hidden_tag() }}
-            <h3>Please enter a valid email address:
-            {{ form.user_email }}</h3>
-            <h3>Enter a password 9 to 30 characters
-            {{ form.user_password}}</h3>
-            {{ form.submit }}
-            {% for error in form.user_email.errors %} <p style="color: rgb(100,0,0);" ,style="font-size:400%" ;> <b>
-                    {{error}} </b></p> {% endfor %}
-        </form>
-        <h3> Don't have an account? Sign up here</h3>
-        <a href="{{url_for('register')}}">Register Page</a><br>
-    </div>
+            <h1> <b> CULINARY EXPLORER: Login</b></h1>
+            <form method="POST" action="">
+                {{ form.hidden_tag() }}
+                <h3>Please enter a valid email address:
+                    {{ form.user_email }}</h3>
+                <h3>Enter a password 9 to 30 characters
+                    {{ form.user_password}}</h3>
+                {{ form.submit }}
+                {% for error in form.user_email.errors %} <p style="color: rgb(100,0,0);" ,style="font-size:400%" ;> <b>
+                        {{error}} </b></p> {% endfor %}
+                {% if error %}
+                <p style="color: rgb(100,0,0);" ,style="font-size:400%" ;> <b><strong>Login Error:</strong>
+                        {{ error }} </b></p>
+                {% endif %}
+            </form>
+            <h3> Don't have an account? Sign up here</h3>
+            <a href="{{url_for('register')}}">Register Page</a><br>
+        </div>
     </center>
 </body>
 
