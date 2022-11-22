@@ -46,4 +46,15 @@ def get_random_meal()-> tuple:
 
     return (meal_name, meal_category, meal_instructions, meal_ingredients, meal_id)
 
+def get_meal_name(meal_id):
+    FULL_URL = f'{BASE_URL}lookup.php?i={meal_id}'
+    response = requests.get(
+        FULL_URL
+    )
+    data = response.json()
+    meal = data['meals'][0]
+    meal_name = meal['strMeal']
+    
+    return meal_name
+
 #print(get_random_meal())

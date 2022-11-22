@@ -130,11 +130,13 @@ class UserRecipes(database.Model):
     # maybe add more stuff to database?
     user_id = database.Column(
         database.Integer,
-        database.ForeignKey("person.id"),
+        #database.ForeignKey("person.id"),
         unique=False,
         nullable=False,
     )
 
+#with app.app_context():
+#    database.drop_all()
 
 # database creation
 with app.app_context():
@@ -153,7 +155,7 @@ def title():
 
 @app.route("/display")
 @app.route("/display/<meal_id>")
-# @login_required
+@login_required
 def display(meal_id=None):  # reroute to display
     if meal_id is None:
         meal = api.get_random_meal()
@@ -170,20 +172,26 @@ def display(meal_id=None):  # reroute to display
 
 
 @app.route("/save_recipe", methods=["POST"])
-# @login_required
+@login_required
 def save_recipe():
     form_data = flask.request.form
     recipe_id = form_data["recipe_id"]
-    email = current_user.email
-    save_recipe = UserRecipes(recipe_id=recipe_id, email=email)
+    id = current_user.id
+    save_recipe = UserRecipes(recipe_id=recipe_id, user_id=current_user.id)
     database.session.add(save_recipe)
     database.session.commit()
-    return
+    return flask.redirect(f"/display/{recipe_id}")
 
 
 @app.route("/user_saved_recipes")
-# @login_required
+@login_required
 def user_saved_recipes():
+    
+    recipes = UserRecipes.query.filter_by(user_id=current_user.id)
+    recipes_list = []
+    for recipe in recipes:
+        recipes_list.append((recipe.recipe_id,api.get_meal_name(recipe.recipe_id)))
+    print(recipes_list)
     return "user_saved_recipes"
 
 
