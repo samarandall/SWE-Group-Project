@@ -191,9 +191,18 @@ def user_saved_recipes():
     recipes_list = []
     for recipe in recipes:
         recipes_list.append((recipe.recipe_id,api.get_meal_name(recipe.recipe_id)))
-    print(recipes_list)
-    return "user_saved_recipes"
+    #print(recipes_list)
+    return flask.render_template(
+        "userSavedRecipes.html",
+        recipes_list=recipes_list
+    )
 
+@app.route("/handle_display", methods=["POST"])
+@login_required
+def handle_display():
+    form_data = flask.request.form
+    recipe_id = form_data["recipe_id"]
+    return flask.redirect(f"/display/{recipe_id}")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -261,7 +270,6 @@ def unauthorized_callback():
     Parameters(none)
     Returns: redirect to beginning route ie '/' route"""
     return redirect(url_for("title"))
-
 
 if __name__ == "__main__":
     app.run(debug=True)
