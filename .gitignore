@@ -1,4 +1,4 @@
 .env
 secrets
 basic.conf
-recipe.conf
+wireguard.conf
