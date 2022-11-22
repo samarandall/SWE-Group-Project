@@ -1,3 +1,4 @@
+https://github.com/samarandall/SWE-Group-Project
 Group Project for Professor Laith's Software Engineering Class Fall 2022
 
 TO DO:
@@ -5,7 +6,6 @@ TO DO:
 2) create HTML Files
 3) hook up html and forms and make sure data persists
 4) utilize APIS for project
-
 
 LINK TO PUBLIC GROUP GITHUB REPO:
 https://github.com/samarandall/SWE-Group-Project
@@ -29,7 +29,7 @@ https://docs.google.com/document/d/1HN1E3Tv-OE3NdwWXCNax21tR0YkfSTNV2PA_onieVAk/
 ################################################################################################################
 
 FLY.IO DEPLOYMENT LINK:
-(LINK WILL GO HERE)
+frosty-mountain-2235.fly.dev
 
 ################################################################################################################
 
@@ -52,7 +52,7 @@ THE FOUR TECHNICAL REQUIREMENTS UTILIZED BY THIS PROJECT
 3)  REST API Integration: This means you must integrate at least one external API into your project. Here is a list if you are looking for ideas.
 
 API's UTILIZED IN THE PROJECT:
-(LIST HERE FOR DOCUMENTATION)
+themealdb
 
 4)  User login: Basic login 
 
