@@ -31,9 +31,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 
-
 database = SQLAlchemy(app)
-
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -71,7 +69,6 @@ class RegisterForm(FlaskForm):
             raise ValidationError(
                 "Email already on file, please login via the link below or register a different one."
             )
-
 
 
 class LoginForm(FlaskForm):
@@ -135,6 +132,8 @@ class UserRecipes(database.Model):
         nullable=False,
     )
 
+
+#drop all tables
 #with app.app_context():
 #    database.drop_all()
 
@@ -169,6 +168,7 @@ def display(meal_id=None):
         instructions=meal[2],
         ingredients=meal[3],
         id=meal[4],
+        img=meal[5]
     )
 
 
@@ -199,6 +199,7 @@ def user_saved_recipes():
         recipes_list=recipes_list
     )
 
+
 @app.route("/handle_display", methods=["POST"])
 @login_required
 def handle_display():
@@ -206,6 +207,7 @@ def handle_display():
     form_data = flask.request.form
     recipe_id = form_data["recipe_id"]
     return flask.redirect(f"/display/{recipe_id}")
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -273,6 +275,7 @@ def unauthorized_callback():
     Parameters(none)
     Returns: redirect to beginning route ie '/' route"""
     return redirect(url_for("title"))
+
 
 if __name__ == "__main__":
     app.run(debug=True)

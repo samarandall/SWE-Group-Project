@@ -2,26 +2,36 @@
     <head>
         <meta charset="UTF-8">
         <title>Meal</title>
-        <link rel="stylesheet" href='/static/display.css' />
+        <link rel="stylesheet" href='/static/styles/display.css' />
     </head>
     <body>
         <div class="content">
+            <div class='header'>
             <h1>{{name}}</h1>
             <h2>{{category}}</h2>
+            <img src={{img}}>
             <p>Ingredients:</p>
+            </div>
+
+            <div class="ing">
             <ul>
             {% for ingredient in ingredients%}
                 <li>{{ingredient[0]}}, {{ingredient[1]}}</li>
             {% endfor %}
             </ul>
+            </div>
+
+            <div class="instr">
             <p>Cooking Instructions:</p>
             <p>{{instructions}}</p>
+            </div>
         </div>
         <form method="POST" action="/save_recipe">
-            <input type="text" name="recipe_id" value={{id}}>
+            <input class="recipe_id" type="text" name="recipe_id" value={{id}}>
             <input type="submit" value="Save this recipe">
         </form>
-
-
+        <form method="GET" action="/main">
+            <input type="submit" value="Return To Home">
+        </form>
     </body>
 </html>

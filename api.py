@@ -18,6 +18,7 @@ def get_meal(meal_id) -> tuple:
     meal_category = meal['strCategory']
     meal_instructions = meal['strInstructions']
     meal_id = meal['idMeal']
+    meal_img = meal['strMealThumb']
 
     meal_ingredients = []
     for i in range(1,21):
@@ -26,7 +27,7 @@ def get_meal(meal_id) -> tuple:
         if ingredient:
             meal_ingredients.append((ingredient,measurement))
 
-    return (meal_name, meal_category, meal_instructions, meal_ingredients, meal_id)
+    return (meal_name, meal_category, meal_instructions, meal_ingredients, meal_id, meal_img)
 
 def get_random_meal()-> tuple:
     '''This method fetches a random meal from themealdb'''
@@ -44,6 +45,7 @@ def get_random_meal()-> tuple:
     meal_category = meal['strCategory']
     meal_instructions = meal['strInstructions']
     meal_id = meal['idMeal']
+    meal_img = meal['strMealThumb']
 
     meal_ingredients = []
     for i in range(1,21):
@@ -51,7 +53,7 @@ def get_random_meal()-> tuple:
         measurement = meal[f"strMeasure{i}"]
         if ingredient:
             meal_ingredients.append((ingredient,measurement))
-    return (meal_name, meal_category, meal_instructions, meal_ingredients, meal_id)
+    return (meal_name, meal_category, meal_instructions, meal_ingredients, meal_id, meal_img)
 
 def get_meal_name(meal_id):
     '''This method fetches a specific meal name from themealdb'''
@@ -63,7 +65,6 @@ def get_meal_name(meal_id):
     data = response.json()
     meal = data['meals'][0]
     meal_name = meal['strMeal']
-    
     return meal_name
 
-#get_random_meal()
+get_random_meal()
