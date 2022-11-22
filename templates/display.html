@@ -10,10 +10,11 @@
             <h1>{{name}}</h1>
             <h2>{{category}}</h2>
             <img src={{img}}>
-            <p>Ingredients:</p>
+            
             </div>
 
             <div class="ing">
+            <p>Ingredients:</p>
             <ul>
             {% for ingredient in ingredients%}
                 <li>{{ingredient[0]}}, {{ingredient[1]}}</li>
@@ -27,8 +28,10 @@
             </div>
         </div>
         <form method="POST" action="/save_recipe">
-            <input class="recipe_id" type="text" name="recipe_id" value={{id}}>
+            <br><br><br>
             <input type="submit" value="Save this recipe">
+            <input class="recipe_id" type="text" name="recipe_id" value={{id}}>
+            
         </form>
         <form method="GET" action="/main">
             <input type="submit" value="Return To Home">
