@@ -11,7 +11,7 @@
             <p>Ingredients:</p>
             <ul>
             {% for ingredient in ingredients%}
-                <li>{{ingredient}}</li>
+                <li>{{ingredient[0]}}, {{ingredient[1]}}</li>
             {% endfor %}
             </ul>
             <p>Cooking Instructions:</p>

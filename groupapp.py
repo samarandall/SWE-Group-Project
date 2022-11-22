@@ -156,7 +156,8 @@ def title():
 @app.route("/display")
 @app.route("/display/<meal_id>")
 @login_required
-def display(meal_id=None):  # reroute to display
+def display(meal_id=None):
+    '''This route displayes either a random or given meal'''
     if meal_id is None:
         meal = api.get_random_meal()
     else:
@@ -174,6 +175,7 @@ def display(meal_id=None):  # reroute to display
 @app.route("/save_recipe", methods=["POST"])
 @login_required
 def save_recipe():
+    '''this route handles when the user wants to save a recipe and adds it to the database'''
     form_data = flask.request.form
     recipe_id = form_data["recipe_id"]
     id = current_user.id
@@ -186,7 +188,7 @@ def save_recipe():
 @app.route("/user_saved_recipes")
 @login_required
 def user_saved_recipes():
-    
+    '''this route displayes the recipes a user ahs previously saved'''
     recipes = UserRecipes.query.filter_by(user_id=current_user.id)
     recipes_list = []
     for recipe in recipes:
@@ -200,13 +202,14 @@ def user_saved_recipes():
 @app.route("/handle_display", methods=["POST"])
 @login_required
 def handle_display():
+    '''this route handles a display reroute'''
     form_data = flask.request.form
     recipe_id = form_data["recipe_id"]
     return flask.redirect(f"/display/{recipe_id}")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    """DOCSTRING TEMPLATE HOLDER"""
+    """this route allows a user to create a user and saves it the the database"""
     form = RegisterForm()
     if form.validate_on_submit():
         # generates a hashed password based on created bcrypt object
@@ -258,8 +261,8 @@ def logout():
 @app.route("/main", methods=["Get", "POST"])
 @login_required
 def main():
+    """This route displays the main page"""
     user = current_user.email
-    """DOCSTRING TEMPLATE HOLDER"""
     return render_template("mainpage.html", user=user)
 
 

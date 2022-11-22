@@ -12,8 +12,7 @@
             {% for recipe in recipes_list %}
                 <label for="recipe">{{recipe[1]}}</label>
                 <input  type="submit" name="recipe" value="Go to Recipe">
-                <input type="text" name="recipe_id" value={{recipe[0]}}>
-                <br>
+                <input type="text" name="recipe_id" value={{recipe[0]}}><br>
             {% endfor %}
             {% endif %}
             </from>
