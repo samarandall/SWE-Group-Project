@@ -211,14 +211,6 @@ def handle_display():
     return flask.redirect(f"/display/{recipe_id}")
 
 
-@app.route("/main", methods=["Get", "POST"])
-@login_required
-def main():
-    """This route displays the main page"""
-    user = current_user.email
-    return render_template("mainpage.html", user=user)
-
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """this route allows a user to create a user and saves it the the database"""
@@ -253,7 +245,7 @@ def login():
                 user.hashed_password, form.user_password.data
             ):
                 login_user(user)
-                return redirect(url_for("main"))
+                return redirect(url_for("display"))
             else:
                 password_error = "The password you have entered does not match"
     return render_template("login.html", error=password_error, form=form)

@@ -7,17 +7,35 @@
         <link rel="stylesheet" href='static/styles/user.css' />
     </head>
     <body>
-        <div class="content">
-            <h2>Saved Recipes:</h2>
-            <form id="ret" method="POST" action="/handle_display">
-            {% if recipes_list %}
-            {% for recipe in recipes_list %}
-                <label for="recipe">{{recipe[1]}}</label>
-                <input type="submit" name="recipe" value="Go to Recipe">
-                <input class="recipe_id" type="text" name="recipe_id" value={{recipe[0]}}><br>
-            {% endfor %}
-            {% endif %}
-            </from>
+        <div class="light-blue-box">
+            <left>
+                <h3>User Email: {% if current_user.is_authenticated %}
+                    {{ user }}
+                    {% endif %}</h3>
+                <h3> Finished Browsing Recipes? Logout here:
+                    <a href="{{url_for('logout')}}">Logout</a><br>
+                    Need an idea? Look at random Recipes:
+                    <a href ="{{url_for('display')}}">Random Recipe</a><br>
+                </h3>
+                
+            </left>
+            </div>
+        <center>
+        <div class="white-box">
+        <h1> <b> Culinary Explorer </b></h1>
+            <div class="content">
+                <h2>Saved Recipes:</h2>
+                <form id="ret" method="POST" action="/handle_display">
+                {% if recipes_list %}
+                {% for recipe in recipes_list %}
+                    <label for="recipe">{{recipe[1]}}</label>
+                    <input type="submit" name="recipe" value="Go to Recipe">
+                    <input class="recipe_id" type="text" name="recipe_id" value={{recipe[0]}}><br>
+                {% endfor %}
+                {% endif %}
+                </from>
+            </div>
         </div>
+        </center>
     </body>
 </html>
