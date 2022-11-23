@@ -2,3 +2,4 @@
 secrets
 basic.conf
 wireguard.conf
+/venv
