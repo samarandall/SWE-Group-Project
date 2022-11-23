@@ -15,7 +15,7 @@
                 <h3> Finished Browsing Recipes? Logout here:
                     <a href="{{url_for('logout')}}">Logout</a><br>
                     Need an idea? Look at random Recipes:
-                    <a href ="{{url_for('display')}}">Random Recipe</a><br>
+                    <a href ="{{url_for('display')}}">Random Recipes</a><br>
                 </h3>
                 
             </left>
@@ -24,7 +24,7 @@
         <div class="white-box">
         <h1> <b> Culinary Explorer </b></h1>
             <div class="content">
-                <h2>Saved Recipes:</h2>
+                <h2>{{ user }}'s Saved Recipes:</h2>
                 <form id="ret" method="POST" action="/handle_display">
                 {% if recipes_list %}
                 {% for recipe in recipes_list %}

@@ -6,13 +6,16 @@ import os
 from flask import Flask, url_for, redirect, render_template
 import flask
 from flask_sqlalchemy import SQLAlchemy
+
 # login information
 from flask_login import LoginManager, UserMixin
 from flask_login import logout_user, login_user, login_required, current_user
+
 # used to create form objects such as the search bar
 from flask_wtf import FlaskForm
 from wtforms import EmailField, SubmitField, PasswordField
 from wtforms.validators import email, length, InputRequired, ValidationError
+
 # used for hashing/encrypting password
 from flask_bcrypt import Bcrypt
 import api
@@ -32,6 +35,7 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 
 database = SQLAlchemy(app)
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -115,7 +119,9 @@ class Person(database.Model, UserMixin):
 
     id = database.Column(database.Integer, primary_key=True)
     email = database.Column(database.String(30), unique=True, nullable=False)
-    hashed_password = database.Column(database.LargeBinary(60), unique=False, nullable=False)
+    hashed_password = database.Column(
+        database.LargeBinary(60), unique=False, nullable=False
+    )
 
 
 class UserRecipes(database.Model):
@@ -127,14 +133,14 @@ class UserRecipes(database.Model):
     # maybe add more stuff to database?
     user_id = database.Column(
         database.Integer,
-        #database.ForeignKey("person.id"),
+        # database.ForeignKey("person.id"),
         unique=False,
         nullable=False,
     )
 
 
-#drop all tables
-#with app.app_context():
+# drop all tables
+# with app.app_context():
 #    database.drop_all()
 
 # database creation
@@ -155,7 +161,7 @@ def title():
 @app.route("/display/<meal_id>")
 @login_required
 def display(meal_id=None):
-    '''This route displayes either a random or given meal'''
+    """This route displayes either a random or given meal"""
     user = current_user.email
     if meal_id is None:
         meal = api.get_random_meal()
@@ -169,14 +175,23 @@ def display(meal_id=None):
         ingredients=meal[3],
         id=meal[4],
         img=meal[5],
-        user=user
+        user=user,
     )
+
+
+@app.route("/handle_display", methods=["POST"])
+@login_required
+def handle_display():
+    """this route handles a display reroute"""
+    form_data = flask.request.form
+    recipe_id = form_data["recipe_id"]
+    return flask.redirect(f"/display/{recipe_id}")
 
 
 @app.route("/save_recipe", methods=["POST"])
 @login_required
 def save_recipe():
-    '''this route handles when the user wants to save a recipe and adds it to the database'''
+    """this route handles when the user wants to save a recipe and adds it to the database"""
     form_data = flask.request.form
     recipe_id = form_data["recipe_id"]
     id = current_user.id
@@ -189,26 +204,15 @@ def save_recipe():
 @app.route("/user_saved_recipes")
 @login_required
 def user_saved_recipes():
-    '''this route displayes the recipes a user has previously saved'''
+    """this route displayes the recipes a user has previously saved"""
     user = current_user.email
     recipes = UserRecipes.query.filter_by(user_id=current_user.id)
     recipes_list = []
     for recipe in recipes:
-        recipes_list.append((recipe.recipe_id,api.get_meal_name(recipe.recipe_id)))
+        recipes_list.append((recipe.recipe_id, api.get_meal_name(recipe.recipe_id)))
     return flask.render_template(
-        "userSavedRecipes.html",
-        recipes_list=recipes_list,
-        user=user
+        "userSavedRecipes.html", recipes_list=recipes_list, user=user
     )
-
-
-@app.route("/handle_display", methods=["POST"])
-@login_required
-def handle_display():
-    '''this route handles a display reroute'''
-    form_data = flask.request.form
-    recipe_id = form_data["recipe_id"]
-    return flask.redirect(f"/display/{recipe_id}")
 
 
 @app.route("/register", methods=["GET", "POST"])
