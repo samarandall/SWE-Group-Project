@@ -139,10 +139,6 @@ class UserRecipes(database.Model):
     )
 
 
-# drop all tables
-# with app.app_context():
-#    database.drop_all()
-
 # database creation
 with app.app_context():
     database.create_all()
