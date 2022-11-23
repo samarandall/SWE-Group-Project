@@ -190,14 +190,15 @@ def save_recipe():
 @login_required
 def user_saved_recipes():
     '''this route displayes the recipes a user has previously saved'''
+    user = current_user.email
     recipes = UserRecipes.query.filter_by(user_id=current_user.id)
     recipes_list = []
     for recipe in recipes:
         recipes_list.append((recipe.recipe_id,api.get_meal_name(recipe.recipe_id)))
-    #print(recipes_list)
     return flask.render_template(
         "userSavedRecipes.html",
-        recipes_list=recipes_list
+        recipes_list=recipes_list,
+        user=user
     )
 
 
