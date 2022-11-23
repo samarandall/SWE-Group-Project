@@ -36,6 +36,7 @@ old-pond-5603.fly.dev
 WHAT WE LEARNED AND ENJOYED ABOUT THE PROJECT:
 1) Learning how to apply the basics of creating a password and verifying it for login
 2) Working with new APIs that we haven't utilized before
+3) Creating a theme with the overall project
 
 WHAT WE WANTED TO LEARN OR DIDN'T ENJOY ABOUT THE PROJECT:
 1)How to implement a search bar for queries and how to effectively do that
@@ -63,3 +64,5 @@ STRETCH FEATURES UTILIZED BY THIS PROJECT
 
 USER AUTHENTICATION
 We utilized Option 2: Implement email + password registration and login. For this case, you cannot store passwords in your database in plain text, you must store a hashed form. You will also need to make sure you handle authentication via Flask-Login.
+
+TRIED TO BEAUTIFY THE PROJECT
