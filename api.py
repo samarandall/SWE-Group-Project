@@ -67,4 +67,4 @@ def get_meal_name(meal_id):
     meal_name = meal['strMeal']
     return meal_name
 
-get_random_meal()
+#get_random_meal()
