@@ -1,40 +1,58 @@
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Meal</title>
-        <link rel="stylesheet" href='/static/styles/display.css' />
-    </head>
-    <body>
-        <div class="content">
-            <div class='header'>
-            <h1>{{name}}</h1>
-            <h2>{{category}}</h2>
-            <img src={{img}}>
-            
-            </div>
 
-            <div class="ing">
-            <p>Ingredients:</p>
-            <ul>
-            {% for ingredient in ingredients%}
-                <li>{{ingredient[0]}}, {{ingredient[1]}}</li>
-            {% endfor %}
-            </ul>
-            </div>
+<head>
+    <meta charset="UTF-8">
+    <title>Meal</title>
+    <link rel="stylesheet" href='/static/styles/display.css' />
+</head>
 
-            <div class="instr">
-            <p>Cooking Instructions:</p>
-            <p>{{instructions}}</p>
+<body>
+    <div class="light-blue-box">
+    <left>
+        <h3>User Email: {% if current_user.is_authenticated %}
+            {{ user }}
+            {% endif %}</h3>
+        <h3> Finished Browsing Recipes?
+            <a href="{{url_for('logout')}}">Logout Page</a><br>
+        </h3>
+    </left>
+    </div>
+    <center>
+        <div class="white-box">
+            <div class="content">
+                <div class='header'>
+                    <h1>{{name}}</h1>
+                    <h2>{{category}}</h2>
+                    <img src={{img}}>
+
+                </div>
+
+                <div class="ing">
+                    <p>Ingredients:</p>
+                    <ul>
+                        {% for ingredient in ingredients%}
+                        <li>{{ingredient[0]}}, {{ingredient[1]}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="instr">
+                    <p>Cooking Instructions:</p>
+                    <p>{{instructions}}</p>
+                </div>
             </div>
-        </div>
-        <form method="POST" action="/save_recipe">
-            <br><br><br>
-            <input type="submit" value="Save this recipe">
-            <input class="recipe_id" type="text" name="recipe_id" value={{id}}>
-            
-        </form>
-        <form method="GET" action="/main">
-            <input type="submit" value="Return To Home">
-        </form>
-    </body>
+            <form method="POST" action="/save_recipe">
+                <br><br><br>
+                <input type="submit" value="Save this recipe">
+                <input class="recipe_id" type="text" name="recipe_id" value={{id}}>
+
+            </form>
+            <form method="GET" action="/main">
+                <input type="submit" value="Return To Home">
+            </form>
+    </center>
+    </div>
+
+</body>
+
 </html>

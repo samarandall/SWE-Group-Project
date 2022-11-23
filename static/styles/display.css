@@ -1,17 +1,21 @@
-*{
-    background-color: lightcyan;
-}
+
 .recipe_id{
     height: 0px;
     width: 0px;
 }
 
 h1 {
+    color: darkgoldenrod;
     text-align: center;
 }
 
 h2{
+    color: crimson;
     text-align: center;
+}
+
+h3 {
+    color: rgb(7, 6, 0)
 }
 
 img{
@@ -39,4 +43,30 @@ img{
     float: left;
     padding: 20px;
     width: 60%;
+}
+
+body {
+
+    background-image: url("/static/images/full_table.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.white-box {
+    background-color: white;
+    color: black;
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: content-box;
+}
+
+.light-blue-box {
+    background-color: lightskyblue;
+    color: black;
+    width: 30%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
 }

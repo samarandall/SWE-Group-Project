@@ -143,7 +143,6 @@ with app.app_context():
 
 
 # app routes
-# base route - NEEDS TO BE BUILT
 @app.route("/")
 def title():
     """renders a base page that allows user to be redirected to login or signup
@@ -157,6 +156,7 @@ def title():
 @login_required
 def display(meal_id=None):
     '''This route displayes either a random or given meal'''
+    user = current_user.email
     if meal_id is None:
         meal = api.get_random_meal()
     else:
@@ -168,7 +168,8 @@ def display(meal_id=None):
         instructions=meal[2],
         ingredients=meal[3],
         id=meal[4],
-        img=meal[5]
+        img=meal[5],
+        user=user
     )
 
 
@@ -188,7 +189,7 @@ def save_recipe():
 @app.route("/user_saved_recipes")
 @login_required
 def user_saved_recipes():
-    '''this route displayes the recipes a user ahs previously saved'''
+    '''this route displayes the recipes a user has previously saved'''
     recipes = UserRecipes.query.filter_by(user_id=current_user.id)
     recipes_list = []
     for recipe in recipes:
@@ -207,6 +208,14 @@ def handle_display():
     form_data = flask.request.form
     recipe_id = form_data["recipe_id"]
     return flask.redirect(f"/display/{recipe_id}")
+
+
+@app.route("/main", methods=["Get", "POST"])
+@login_required
+def main():
+    """This route displays the main page"""
+    user = current_user.email
+    return render_template("mainpage.html", user=user)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -258,14 +267,6 @@ def logout():
     Returns: redirect to login"""
     logout_user()
     return redirect(url_for("login"))
-
-
-@app.route("/main", methods=["Get", "POST"])
-@login_required
-def main():
-    """This route displays the main page"""
-    user = current_user.email
-    return render_template("mainpage.html", user=user)
 
 
 @login_manager.unauthorized_handler
