@@ -13,9 +13,9 @@ https://github.com/samarandall/SWE-Group-Project
 MEMBERS:
 NICHOLAS MONTELONGO
 LINK TO PULL REQUESTS(2):
-1)https://github.com/samarandall/SWE-Group-Project/pull/3#issuecomment-1325386751
-2)
-
+1) https://github.com/samarandall/SWE-Group-Project/pull/3
+2) https://github.com/samarandall/SWE-Group-Project/pull/4
+ 
 SAM RANDALL
 LINK TO PULL REQUESTS(2):
 1) https://github.com/samarandall/SWE-Group-Project/pull/1
